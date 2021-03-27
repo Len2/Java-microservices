@@ -1,4 +1,5 @@
 package com.microservices.os.api.controller;
+import com.microservices.os.api.common.Payment;
 import com.microservices.os.api.common.TransactionRequest;
 import com.microservices.os.api.entity.Order;
 import com.microservices.os.api.service.OrderService;
@@ -17,6 +18,9 @@ public class OrderController {
   @PostMapping("/bookOrder")
   public Order bookOrder(@RequestBody TransactionRequest request){
       Order order =  request.getOrder();
+      Payment payment =  request.getPayment();
+      payment.setOrderId(order.getId());
+      payment.setAmount(order.getPrice());
       return service.saveOrder(order);
   }
 
