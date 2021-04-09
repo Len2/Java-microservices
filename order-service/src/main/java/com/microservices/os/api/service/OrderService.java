@@ -24,7 +24,7 @@ public class OrderService {
         payment.setOrderId(order.getId());
         payment.setAmount(order.getPrice());
         //Rest Call
-        Payment paymentResponse = template.postForObject("http://localhost:9191/payment/doPayment",payment,Payment.class);
+        Payment paymentResponse = template.postForObject("http://PAYMENT-SERVICE/payment/doPayment",payment,Payment.class);
         response = paymentResponse.getPaymentStatus().equals("success") ? "payment processing success":"there is failure in payment api";
         repository.save(order);
         return  new TransactionResponse(order,paymentResponse.getAmount(),paymentResponse.getTransactionId(),response);
